@@ -1,0 +1,16 @@
+{
+    "Lua.diagnostics.globals": [
+        "crow",
+        "include",
+        "softcut",
+        "audio",
+        "params",
+        "_path",
+        "screen",
+        "midi",
+        "redraw",
+        "enc",
+        "key",
+        "init"
+    ]
+}
