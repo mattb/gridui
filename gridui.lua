@@ -6,13 +6,13 @@ local counter = metro.init()
 function init()
   local g = grid.connect()
   local gridui = GridUI.new{grid=g}
-  local button1 = button.new{id="b1", x=1, y=1, 
+  local button1 = button.new{x=1, y=1, 
     action = function(options) print("I'm button 1: " .. options.val) end 
   }
-  local button2 = button.new{id="b2", x=3, y=3, width=2, height=2, momentary=1,
+  local button2 = button.new{x=3, y=3, width=2, height=2, momentary=1,
     action = function(options) 
       if options.val == 1 then
-        print("I'm button 2 and I'm turning off button 1") 
+        print("I'm button 2 " .. options.id .. " and I'm turning off button 1") 
         button1:set(false)
       end
     end 

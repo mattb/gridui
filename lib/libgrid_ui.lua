@@ -18,7 +18,19 @@ function GridUI.new(options)
   return s
 end
 
+local function RandomVariable(length)
+  math.randomseed(os.clock()^5)
+	local res = ""
+	for i = 1, length do
+		res = res .. string.char(math.random(97, 122))
+	end
+	return res
+end
+
 function GridUI:add(control)
+  if not control.id then
+    control.id = RandomVariable(10)
+  end
   self.controls[control.id] = control
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] = function(x,y,z) control:key(x,y,z) end
