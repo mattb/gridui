@@ -11,6 +11,7 @@ function GridUI.new(options)
     height=options.width or 8
   }
   s.controls={}
+  s.controls_draw_order={}
   s.key_handlers={}
   s.grid.key = function(x,y,z)
     s:key(x,y,z)
@@ -33,6 +34,7 @@ function GridUI:add(control)
   end
   control.update_ui = function() self:update() end
   self.controls[control.id] = control
+  table.insert(self.controls_draw_order, control)
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] = function(x,y,z) control:key(x,y,z) end
   end
@@ -47,7 +49,6 @@ end
 function GridUI:set(id, val)
   local control = self.controls[id]
   local result = control:set(val)
-  self:update()
   return result
 end
 
@@ -58,7 +59,7 @@ function GridUI:key(x,y,z)
 end
 
 function GridUI:update()
-  for _, control in pairs(self.controls) do
+  for _, control in pairs(self.controls_draw_order) do
     control:draw(function(x, y, val)
       self.grid:led(x + self.layout.x, y + self.layout.y, val)
     end)

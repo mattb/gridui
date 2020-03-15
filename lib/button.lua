@@ -44,6 +44,7 @@ end
 
 function GridButton:set(val)
   self.on = val
+  self.update_ui()
 end
 
 function GridButton:get()
