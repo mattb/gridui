@@ -30,7 +30,7 @@ function GridGroupButtons:on_add(grid_ui)
     for j = 1, self.columns do
       local button = Button.new{x=bx,
         y=by,
-        group=s,
+        group=self,
         width=self.width,
         height=self.height, 
         momentary=self.momentary,

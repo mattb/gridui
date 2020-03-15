@@ -11,6 +11,7 @@
         "redraw",
         "enc",
         "key",
-        "init"
+        "init",
+        "grid"
     ]
 }
