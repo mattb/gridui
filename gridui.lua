@@ -9,10 +9,12 @@ function init()
   local button1 = button.new{id="b1", x=1, y=1, 
     action = function(val) print("I'm button 1: " .. val) end 
   }
-  local button2 = button.new{id="b2", x=3, y=3, width=2, height=2,
+  local button2 = button.new{id="b2", x=3, y=3, width=2, height=2, momentary=1,
     action = function(val) 
-      print("I'm button 2: " .. val .. " and I'm turning off button 1") 
-      button1:set(false)
+      if val == 1 then
+        print("I'm button 2: " .. val .. " and I'm turning off button 1") 
+        button1:set(false)
+      end
     end 
   }
   gridui:add(button1)
