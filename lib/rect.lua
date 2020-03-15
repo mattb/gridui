@@ -40,4 +40,7 @@ end
 function GridRect:key(x,y,z)
 end
 
+function GridRect:on_add(grid_ui)
+end
+
 return GridRect

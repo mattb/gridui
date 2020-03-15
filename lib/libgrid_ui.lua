@@ -38,6 +38,7 @@ function GridUI:add(control)
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] = function(x,y,z) control:key(x,y,z) end
   end
+  control:on_add(self)
   self:update()
 end
 

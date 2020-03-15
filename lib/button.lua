@@ -20,6 +20,9 @@ function GridButton.new(options)
   return s
 end
 
+function GridButton:on_add(grid_ui)
+end
+
 function GridButton:keys()
   local k = {}
   for x = 1,self.width do
