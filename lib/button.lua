@@ -5,6 +5,8 @@ function GridButton.new(options)
   local s = setmetatable({}, GridButton)
 
   s.id = options.id
+  s.update_ui = function() end
+  s.group = options.group
   s.x = options.x
   s.y = options.y
   s.width = options.width or 1
@@ -51,11 +53,13 @@ end
 function GridButton:key(x,y,z)
   if self.momentary then
     self.on = z
-    self.action{id=self.id, val=self.on}
+    self.update_ui()
+    self.action{control=self, val=self.on}
   else
     if z == 1 then
       if self.on == 1 then self.on = 0 else self.on = 1 end
-      self.action{id=self.id, val=self.on}
+      self.update_ui()
+      self.action{control=self, val=self.on}
     end
   end
 end

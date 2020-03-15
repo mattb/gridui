@@ -31,10 +31,12 @@ function GridUI:add(control)
   if not control.id then
     control.id = RandomVariable(10)
   end
+  control.update_ui = function() self:update() end
   self.controls[control.id] = control
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] = function(x,y,z) control:key(x,y,z) end
   end
+  self:update()
 end
 
 function GridUI:get(id)
@@ -44,7 +46,9 @@ end
 
 function GridUI:set(id, val)
   local control = self.controls[id]
-  return control:set(val)
+  local result = control:set(val)
+  self:update()
+  return result
 end
 
 function GridUI:key(x,y,z)
