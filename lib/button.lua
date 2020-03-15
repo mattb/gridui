@@ -20,12 +20,11 @@ function GridButton.new(options)
   return s
 end
 
-function GridButton:on_add(grid_ui)
-end
+function GridButton:on_add(grid_ui) end
 
 function GridButton:keys()
   local k = {}
-  for x = 1,self.width do
+  for x = 1, self.width do
     for y = 1, self.height do
       table.insert(k, {x = self.x + x - 1, y = self.y + y - 1})
     end
@@ -35,13 +34,9 @@ end
 
 function GridButton:draw(led)
   local brightness = self.off_brightness
-  if self.on == 1 then
-    brightness = self.on_brightness
-  end
-  for x = 1,self.width do
-    for y = 1, self.height do
-      led(self.x + x - 1, self.y + y - 1, brightness)
-    end
+  if self.on == 1 then brightness = self.on_brightness end
+  for x = 1, self.width do
+    for y = 1, self.height do led(self.x + x - 1, self.y + y - 1, brightness) end
   end
 end
 
@@ -50,20 +45,22 @@ function GridButton:set(val)
   self.update_ui()
 end
 
-function GridButton:get()
-  return self.on
-end
+function GridButton:get() return self.on end
 
-function GridButton:key(x,y,z)
+function GridButton:key(x, y, z)
   if self.momentary then
     self.on = z
     self.update_ui()
-    self.action{control=self, val=self.on}
+    self.action {control = self, val = self.on}
   else
     if z == 1 then
-      if self.on == 1 then self.on = 0 else self.on = 1 end
+      if self.on == 1 then
+        self.on = 0
+      else
+        self.on = 1
+      end
       self.update_ui()
-      self.action{control=self, val=self.on}
+      self.action {control = self, val = self.on}
     end
   end
 end

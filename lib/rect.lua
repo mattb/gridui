@@ -15,12 +15,10 @@ function GridRect.new(options)
   return s
 end
 
-function GridRect:keys()
-  return {}
-end
+function GridRect:keys() return {} end
 
 function GridRect:draw(led)
-  for x = 1,self.width do
+  for x = 1, self.width do
     for y = 1, self.height do
       local brightness = self.fill_brightness
       if y == 1 or y == self.height or x == 1 or x == self.width then
@@ -31,16 +29,12 @@ function GridRect:draw(led)
   end
 end
 
-function GridRect:set(val)
-end
+function GridRect:set(val) end
 
-function GridRect:get()
-end
+function GridRect:get() end
 
-function GridRect:key(x,y,z)
-end
+function GridRect:key(x, y, z) end
 
-function GridRect:on_add(grid_ui)
-end
+function GridRect:on_add(grid_ui) end
 
 return GridRect

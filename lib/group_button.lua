@@ -28,20 +28,21 @@ function GridGroupButtons:on_add(grid_ui)
 
   for i = 1, self.rows do
     for j = 1, self.columns do
-      local button = Button.new{x=bx,
-        y=by,
-        group=self,
-        width=self.width,
-        height=self.height, 
-        momentary=self.momentary,
-        action = function(options) 
+      local button = Button.new {
+        x = bx,
+        y = by,
+        group = self,
+        width = self.width,
+        height = self.height,
+        momentary = self.momentary,
+        action = function(options)
           self.action({
-            control=options.control,
-            group=self,
-            val=options.val,
-            group_position=self:control_local_vars(options.control)
+            control = options.control,
+            group = self,
+            val = options.val,
+            group_position = self:control_local_vars(options.control)
           })
-        end 
+        end
       }
       table.insert(self.buttons, button)
       grid_ui:add(button)
@@ -61,16 +62,10 @@ function GridGroupButtons:control_local_vars(control)
   y = y - self.y
   y = math.floor(y / self.height)
 
-  return {
-    x=x + 1,
-    y=y + 1,
-    index=x + y*self.columns + 1
-  }
+  return {x = x + 1, y = y + 1, index = x + y * self.columns + 1}
 end
 
-function GridGroupButtons:keys()
-  return {}
-end
+function GridGroupButtons:keys() return {} end
 
 function GridGroupButtons:draw(led)
   for _, b in pairs(self.buttons) do b:draw(led) end
@@ -80,14 +75,10 @@ function GridGroupButtons:set_all(val)
   for _, b in pairs(self.buttons) do b:set(val) end
 end
 
-function GridGroupButtons:set_index(index, val)
-  self.buttons[index]:set(val)
-end
+function GridGroupButtons:set_index(index, val) self.buttons[index]:set(val) end
 
-function GridGroupButtons:get()
-end
+function GridGroupButtons:get() end
 
-function GridGroupButtons:key(x,y,z)
-end
+function GridGroupButtons:key(x, y, z) end
 
 return GridGroupButtons
