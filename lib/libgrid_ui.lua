@@ -25,6 +25,16 @@ function GridUI:add(control)
   end
 end
 
+function GridUI:get(id)
+  local control = self.controls[id]
+  return control:get()
+end
+
+function GridUI:set(id, val)
+  local control = self.controls[id]
+  return control:set(val)
+end
+
 function GridUI:key(x,y,z)
   local no_handler = function(x,y,z) print("No handler for " .. x .. "/" .. y .. "/" .. z) end
   local handler = self.key_handlers[x .. ":" .. y] or no_handler

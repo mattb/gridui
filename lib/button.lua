@@ -9,7 +9,7 @@ function GridButton.new(options)
   s.y = options.y
   s.width = options.width or 1
   s.height = options.height or 1
-  s.on_brightness = options.on_brightness or 15
+  s.on_brightness = options.on_brightness or 13
   s.off_brightness = options.off_brightness or 4
   s.momentary = options.momentary or nil
   s.action = options.action or function(val) end
@@ -51,11 +51,11 @@ end
 function GridButton:key(x,y,z)
   if self.momentary then
     self.on = z
-    self.action(self.on)
+    self.action{id=self.id, val=self.on}
   else
     if z == 1 then
       if self.on == 1 then self.on = 0 else self.on = 1 end
-      self.action(self.on)
+      self.action{id=self.id, val=self.on}
     end
   end
 end
