@@ -1,5 +1,6 @@
 local GridUI = include("lib/libgrid_ui")
 local Button = include("lib/button")
+local Fader = include("lib/fader")
 local Rect = include("lib/rect")
 local GroupButtons = include("lib/group_button")
 
@@ -35,13 +36,23 @@ function init()
     stroke_brightness = 13,
     fill_brightness = 8
   })
-  gridui:add(Rect.new {
-    x = 5,
+
+  gridui:add(Fader.new {
+    x = 1,
     y = 5,
-    width = 4,
+    width = 1,
     height = 4,
-    stroke_brightness = 13,
-    fill_brightness = 8
+    value = 1.0,
+    direction = "up"
+  })
+  
+  gridui:add(Fader.new {
+    x = 5,
+    y = 1,
+    width = 4,
+    height = 2,
+    value = 0.5,
+    direction = "left"
   })
 
   local gb = GroupButtons.new {
