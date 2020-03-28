@@ -49,7 +49,7 @@ function GridUI:set(id, val)
   return result
 end
 
-function GridUI:set_dim(percentage) self.dim = percentage end
+function GridUI:seaw()t_dim(percentage) self.dim = percentage end
 
 function GridUI:key(x, y, z)
   local no_handler = function(x, y, z)
@@ -66,6 +66,26 @@ function GridUI:update()
     end)
   end
   self.grid:refresh()
+  redraw()
+end
+
+function GridUI:draw_on_screen()
+  screen.level(math.floor(4 * self.dim))
+  for x =1, self.layout.width do
+    for y = 1, self.layout.height do
+      screen.rect(x * 7, y * 7, 4, 4)
+      screen.stroke()
+    end
+  end
+  
+  for _, control in pairs(self.controls_draw_order) do
+    control:draw(function(x, y, val)
+      screen.level(math.floor(val * self.dim))
+      screen.rect(x * 7, y * 7, 4, 4)
+      screen.fill()
+      screen.stroke()
+    end)
+  end
 end
 
 return GridUI

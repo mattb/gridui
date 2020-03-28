@@ -7,9 +7,10 @@ local GroupButtons = include("lib/group_button")
 local ControlSpec = require 'controlspec'
 local Formatters = require 'formatters'
 
+local g = grid.connect()
+local gridui = GridUI.new {grid = g}
+
 function init()
-  local g = grid.connect()
-  local gridui = GridUI.new {grid = g}
   local button1 = Button {
     x = 1,
     y = 1,
@@ -100,4 +101,10 @@ function init()
     end
   }
   
+end
+
+function redraw() 
+  screen.clear()
+  gridui:draw_on_screen()
+  screen.update()
 end
