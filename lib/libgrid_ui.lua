@@ -14,6 +14,7 @@ function GridUI.new(options)
   s.controls_draw_order = {}
   s.key_handlers = {}
   s.grid.key = function(x, y, z) s:key(x, y, z) end
+  s.dim = 1.0
   return s
 end
 
@@ -48,6 +49,8 @@ function GridUI:set(id, val)
   return result
 end
 
+function GridUI:set_dim(percentage) self.dim = percentage end
+
 function GridUI:key(x, y, z)
   local no_handler = function(x, y, z)
     print("No handler for " .. x .. "/" .. y .. "/" .. z)
@@ -59,7 +62,7 @@ end
 function GridUI:update()
   for _, control in pairs(self.controls_draw_order) do
     control:draw(function(x, y, val)
-      self.grid:led(x + self.layout.x, y + self.layout.y, val)
+      self.grid:led(x + self.layout.x, y + self.layout.y, math.floor(val * self.dim))
     end)
   end
   self.grid:refresh()

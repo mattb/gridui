@@ -4,6 +4,9 @@ local Fader = include("lib/fader")
 local Rect = include("lib/rect")
 local GroupButtons = include("lib/group_button")
 
+local ControlSpec = require 'controlspec'
+local Formatters = require 'formatters'
+
 function init()
   local g = grid.connect()
   local gridui = GridUI.new {grid = g}
@@ -84,4 +87,17 @@ function init()
     end
   }
   gridui:add(gb_unique)
+
+  params:add{
+    type = 'control',
+    id = 'loop_index',
+    name = 'Dim',
+    controlspec = ControlSpec.new(0, 1, 'lin', 0.05, 100, '%'),
+    formatter = Formatters.percentage,
+    action = function(value) 
+      gridui:set_dim(value)
+      gridui:update()
+    end
+  }
+  
 end
