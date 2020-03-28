@@ -36,7 +36,14 @@ function GridControl:_init(options)
   self.y = options.y
   self.width = options.width or 1
   self.height = options.height or 1
+  self.enabled = true
+  self.update_ui = function() end
   return s
+end
+
+function GridControl:set_enabled(val)
+  self.enabled = val
+  self:update_ui()
 end
 
 function GridControl:keys() return {} end

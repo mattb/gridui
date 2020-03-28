@@ -32,7 +32,9 @@ function GridUI:add(control)
   table.insert(self.controls_draw_order, control)
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] =
-        function(x, y, z) control:key(x, y, z) end
+        function(x, y, z) 
+          if control.enabled then control:key(x, y, z) end
+        end
   end
   control:on_add(self)
   self:update()
@@ -59,8 +61,18 @@ function GridUI:key(x, y, z)
   handler(x, y, z)
 end
 
-function GridUI:update()
+function GridUI:enabled_controls()
+  local ec = {}
   for _, control in pairs(self.controls_draw_order) do
+    if control.enabled then
+      table.insert(ec, control)
+    end
+  end
+  return ec
+end
+
+function GridUI:update()
+  for _, control in pairs(self:enabled_controls()) do
     control:draw(function(x, y, val)
       self.grid:led(x + self.layout.x, y + self.layout.y, math.floor(val * self.dim))
     end)
@@ -78,7 +90,7 @@ function GridUI:draw_on_screen()
     end
   end
   
-  for _, control in pairs(self.controls_draw_order) do
+  for _, control in pairs(self:enabled_controls()) do
     control:draw(function(x, y, val)
       screen.level(math.floor(val * self.dim))
       screen.rect(x * 7, y * 7, 4, 4)

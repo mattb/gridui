@@ -15,7 +15,6 @@ setmetatable(GridButton, {
 function GridButton:_init(options)
   GridControl._init(self, options)
 
-  self.update_ui = function() end
   self.on_brightness = options.on_brightness or 13
   self.off_brightness = options.off_brightness or 4
   self.momentary = options.momentary or nil
