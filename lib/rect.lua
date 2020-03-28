@@ -1,21 +1,23 @@
+local GridControl = include("lib/control")
+
 local GridRect = {}
 GridRect.__index = GridRect
 
-function GridRect.new(options)
-  local s = setmetatable({}, GridRect)
+setmetatable(GridRect, {
+  __index = GridControl, -- this is what makes the inheritance work
+  __call = function (cls, options)
+    local self = setmetatable({}, cls)
+    self:_init(options)
+    return self
+  end,
+})
 
-  s.id = options.id
-  s.group = options.group
-  s.x = options.x
-  s.y = options.y
-  s.width = options.width or 1
-  s.height = options.height or 1
-  s.stroke_brightness = options.stroke_brightness or 13
-  s.fill_brightness = options.fill_brightness or 13
-  return s
+function GridRect:_init(options)
+  GridControl._init(self, options)
+
+  self.stroke_brightness = options.stroke_brightness or 13
+  self.fill_brightness = options.fill_brightness or 13
 end
-
-function GridRect:keys() return {} end
 
 function GridRect:draw(led)
   for x = 1, self.width do
@@ -28,13 +30,5 @@ function GridRect:draw(led)
     end
   end
 end
-
-function GridRect:set(val) end
-
-function GridRect:get() end
-
-function GridRect:key(x, y, z) end
-
-function GridRect:on_add(grid_ui) end
 
 return GridRect

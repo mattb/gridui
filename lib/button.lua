@@ -1,23 +1,27 @@
+local GridControl = include("lib/control")
+
 local GridButton = {}
 GridButton.__index = GridButton
 
-function GridButton.new(options)
-  local s = setmetatable({}, GridButton)
+setmetatable(GridButton, {
+  __index = GridControl, -- this is what makes the inheritance work
+  __call = function (cls, options)
+    local self = setmetatable({}, cls)
+    self:_init(options)
+    return self
+  end,
+})
 
-  s.id = options.id
-  s.update_ui = function() end
-  s.group = options.group
-  s.x = options.x
-  s.y = options.y
-  s.width = options.width or 1
-  s.height = options.height or 1
-  s.on_brightness = options.on_brightness or 13
-  s.off_brightness = options.off_brightness or 4
-  s.momentary = options.momentary or nil
-  s.action = options.action or function(val) end
+function GridButton:_init(options)
+  GridControl._init(self, options)
 
-  s.on = 0
-  return s
+  self.update_ui = function() end
+  self.on_brightness = options.on_brightness or 13
+  self.off_brightness = options.off_brightness or 4
+  self.momentary = options.momentary or nil
+  self.action = options.action or function(val) end
+
+  self.on = 0
 end
 
 function GridButton:on_add(grid_ui) end

@@ -1,25 +1,25 @@
+local GridControl = include("lib/control")
+
 local GridFader = {}
 GridFader.__index = GridFader
 
-function GridFader.new(options)
-  local s = setmetatable({}, GridFader)
+setmetatable(GridFader, {
+  __index = GridControl, -- this is what makes the inheritance work
+  __call = function (cls, options)
+    local self = setmetatable({}, cls)
+    self:_init(options)
+    return self
+  end,
+})
 
-  s.id = options.id
-  s.update_ui = function() end
-  s.group = options.group
-  s.x = options.x
-  s.y = options.y
-  s.width = options.width or 1
-  s.height = options.height or 1
-  s.direction = options.direction or "right"
-  s.on_brightness = options.on_brightness or 13
-  s.off_brightness = options.off_brightness or 4
-  s.action = options.action or function(val) end
-  s.value = options.value or 0
-  return s
+function GridFader:_init(options)
+  GridControl._init(self, options)
+  self.direction = options.direction or "right"
+  self.on_brightness = options.on_brightness or 13
+  self.off_brightness = options.off_brightness or 4
+  self.action = options.action or function(val) end
+  self.value = options.value or 0
 end
-
-function GridFader:on_add(grid_ui) end
 
 function GridFader:keys()
   local k = {}

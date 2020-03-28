@@ -28,7 +28,7 @@ function GridGroupButtons:on_add(grid_ui)
 
   for i = 1, self.rows do
     for j = 1, self.columns do
-      local button = Button.new {
+      local button = Button {
         x = bx,
         y = by,
         group = self,

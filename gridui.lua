@@ -7,12 +7,12 @@ local GroupButtons = include("lib/group_button")
 function init()
   local g = grid.connect()
   local gridui = GridUI.new {grid = g}
-  local button1 = Button.new {
+  local button1 = Button {
     x = 1,
     y = 1,
     action = function(options) print("I'm button 1: " .. options.val) end
   }
-  local button2 = Button.new {
+  local button2 = Button {
     x = 3,
     y = 3,
     width = 2,
@@ -28,7 +28,7 @@ function init()
   }
   gridui:add(button1)
   gridui:add(button2)
-  gridui:add(Rect.new {
+  gridui:add(Rect {
     x = 5,
     y = 5,
     width = 4,
@@ -37,7 +37,7 @@ function init()
     fill_brightness = 8
   })
 
-  gridui:add(Fader.new {
+  gridui:add(Fader {
     x = 1,
     y = 5,
     width = 1,
@@ -46,7 +46,7 @@ function init()
     direction = "up"
   })
   
-  gridui:add(Fader.new {
+  gridui:add(Fader {
     x = 5,
     y = 1,
     width = 4,
