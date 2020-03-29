@@ -51,7 +51,7 @@ function GridUI:set(id, val)
   return result
 end
 
-function GridUI:seaw()t_dim(percentage) self.dim = percentage end
+function GridUI:set_dim(percentage) self.dim = percentage end
 
 function GridUI:key(x, y, z)
   local no_handler = function(x, y, z)
