@@ -18,7 +18,9 @@ function GridFader:_init(options)
   self.on_brightness = options.on_brightness or 13
   self.level = options.level or 4
   self.action = options.action or function(val) end
-  self.value = options.value or 0
+  self.min = options.min or 0
+  self.max = options.max or (self.width - 1)
+  self:set_value(options.value or options.min or self.min)
 end
 
 function GridFader:keys()
@@ -37,40 +39,46 @@ function GridFader:draw(led)
     -- print("UP/DOWN fader not implemented")
   return end
   for x = 1, self.width do
-    local progress = (x - 1) / (self.width - 1)
-    if progress <= self.value then
+    if x < self.position then
       brightness = self.on_brightness
-    elseif progress > self.value then
-      -- TODO: fade
+    elseif x == self.position then
+      brightness = math.floor((self.on_brightness + self.level) / 2)
+    elseif x > self.position then
       brightness = self.level
     end
+
     local directional_x = x
     if self.direction == "left" then
       directional_x = self.width - directional_x
+    else
+      directional_x = directional_x - 1
     end
-    directional_x = self.x + directional_x
     for y = 1, self.height do 
-      led(directional_x, self.y + y - 1, brightness)
+      led(self.x + directional_x, self.y + y - 1, brightness)
     end
   end
 end
 
-function GridFader:set(val)
-  self.value = val
+function GridFader:set_position(position)
+  self.position = math.floor(position)
   self.update_ui()
 end
 
-function GridFader:get() return self.value end
+function GridFader:set_value(val)
+  self:set_position(1 + (self.width - 1) * (val - self.min) / (self.max - self.min - 1))
+end
+
+function GridFader:get_value() 
+  return ((self.position - 1) * (self.max - self.min - 1)) / (self.width - 1) + self.min
+end
 
 function GridFader:key(x, y, z)
   if z == 1 then
-    local val
     if self.direction == "right" then
-      val = (x - self.x) / (self.width - 1)
+      self:set_position(x - self.x + 1)
     elseif self.direction == "left" then
-      val = 1 - (x - self.x) / (self.width - 1)
+      self:set_position(self.width - (x - self.x))
     end
-    self:set(val)
   end
 end
 

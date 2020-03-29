@@ -39,6 +39,7 @@ end
 function GridButton:draw(led)
   local brightness = self.level
   if self.on == 1 then brightness = self.on_brightness end
+  if self.pressed == 1 then brightness = 15 end
   for x = 1, self.width do
     for y = 1, self.height do led(self.x + x - 1, self.y + y - 1, brightness) end
   end
@@ -60,7 +61,6 @@ function GridButton:key(x, y, z)
   self.pressed = z
   if self.momentary then
     self.on = z
-    self.update_ui()
     self.action {control = self, val = self.on}
   else
     if z == 1 then
@@ -69,10 +69,10 @@ function GridButton:key(x, y, z)
       else
         self.on = 1
       end
-      self.update_ui()
       self.action {control = self, val = self.on}
     end
   end
+  self.update_ui()
 end
 
 return GridButton

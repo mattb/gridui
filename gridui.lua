@@ -46,10 +46,10 @@ function init()
   gridui:add(Fader {
     x = 1,
     y = 5,
-    width = 1,
-    height = 4,
+    width = 4,
+    height = 2,
     value = 1.0,
-    direction = "up"
+    direction = "right"
   })
   
   gridui:add(Fader {
@@ -57,7 +57,6 @@ function init()
     y = 1,
     width = 4,
     height = 2,
-    value = 0.5,
     direction = "left"
   })
 
