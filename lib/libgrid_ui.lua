@@ -33,7 +33,7 @@ function GridUI:add(control)
   for _, k in ipairs(control:keys()) do
     self.key_handlers[k.x .. ":" .. k.y] =
         function(x, y, z) 
-          if control.enabled then control:key(x, y, z) end
+          if control.enabled == 1 then control:key(x, y, z) end
         end
   end
   control:on_add(self)
@@ -64,7 +64,7 @@ end
 function GridUI:enabled_controls()
   local ec = {}
   for _, control in pairs(self.controls_draw_order) do
-    if control.enabled then
+    if control.enabled == 1 then
       table.insert(ec, control)
     end
   end

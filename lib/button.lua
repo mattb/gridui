@@ -16,11 +16,12 @@ function GridButton:_init(options)
   GridControl._init(self, options)
 
   self.on_brightness = options.on_brightness or 13
-  self.off_brightness = options.off_brightness or 4
+  self.level = options.level or 4
   self.momentary = options.momentary or nil
   self.action = options.action or function(val) end
 
   self.on = 0
+  self.pressed = 0
 end
 
 function GridButton:on_add(grid_ui) end
@@ -36,7 +37,7 @@ function GridButton:keys()
 end
 
 function GridButton:draw(led)
-  local brightness = self.off_brightness
+  local brightness = self.level
   if self.on == 1 then brightness = self.on_brightness end
   for x = 1, self.width do
     for y = 1, self.height do led(self.x + x - 1, self.y + y - 1, brightness) end
@@ -48,9 +49,15 @@ function GridButton:set(val)
   self.update_ui()
 end
 
+function GridButton:set_level(val)
+  self.level = val
+  self.update_ui()
+end
+
 function GridButton:get() return self.on end
 
 function GridButton:key(x, y, z)
+  self.pressed = z
   if self.momentary then
     self.on = z
     self.update_ui()

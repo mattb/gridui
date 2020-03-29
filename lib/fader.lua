@@ -16,7 +16,7 @@ function GridFader:_init(options)
   GridControl._init(self, options)
   self.direction = options.direction or "right"
   self.on_brightness = options.on_brightness or 13
-  self.off_brightness = options.off_brightness or 4
+  self.level = options.level or 4
   self.action = options.action or function(val) end
   self.value = options.value or 0
 end
@@ -34,7 +34,7 @@ end
 function GridFader:draw(led)
   local brightness
   if self.direction == "up" or self.direction == "down" then 
-    print("UP/DOWN fader not implemented")
+    -- print("UP/DOWN fader not implemented")
   return end
   for x = 1, self.width do
     local progress = (x - 1) / (self.width - 1)
@@ -42,7 +42,7 @@ function GridFader:draw(led)
       brightness = self.on_brightness
     elseif progress > self.value then
       -- TODO: fade
-      brightness = self.off_brightness
+      brightness = self.level
     end
     local directional_x = x
     if self.direction == "left" then

@@ -36,7 +36,7 @@ function GridControl:_init(options)
   self.y = options.y
   self.width = options.width or 1
   self.height = options.height or 1
-  self.enabled = true
+  self.enabled = 1
   self.update_ui = function() end
   return s
 end

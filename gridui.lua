@@ -7,6 +7,8 @@ local GroupButtons = include("lib/group_button")
 local ControlSpec = require 'controlspec'
 local Formatters = require 'formatters'
 
+local inspect = include("lib/inspect")
+
 local g = grid.connect()
 local gridui = GridUI.new {grid = g}
 
@@ -79,15 +81,44 @@ function init()
     y = 6,
     width = 1,
     height = 1,
-    momentary = false,
+    momentary = true,
     columns = 4,
     rows = 1,
     action = function(options)
-      options.group:set_all(0)
-      options.group:set_index(options.group_position.index, 1)
+      for i = 1, 4 do
+        if i == options.group_position.index then
+          options.group:set_index_level(i, 10)
+        else
+          options.group:set_index_level(i, 4)
+        end
+      end
     end
   }
   gridui:add(gb_unique)
+
+  local gb_range = GroupButtons.new {
+    x = 10,
+    y = 8,
+    width = 1,
+    height = 1,
+    momentary = true,
+    columns = 6,
+    rows = 1,
+    action = function(options)
+      if options.group:get_pressed_count() == 2 then
+        local minmax = options.group:get_pressed_min_max()
+        print(inspect(minmax))
+        for i = 1, 6 do
+          if i >= minmax.min and i <= minmax.max then
+            options.group:set_index_level(i, 10)
+          else
+            options.group:set_index_level(i, 4)
+          end
+        end
+      end
+    end
+  }
+  gridui:add(gb_range)
 
   params:add{
     type = 'control',

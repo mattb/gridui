@@ -75,7 +75,54 @@ function GridGroupButtons:set_all(val)
   for _, b in pairs(self.buttons) do b:set(val) end
 end
 
-function GridGroupButtons:set_index(index, val) self.buttons[index]:set(val) end
+function GridGroupButtons:set_index_on(index, val) self.buttons[index]:set(val) end
+
+function GridGroupButtons:set_index_level(index, val) self.buttons[index]:set_level(val) end
+
+function GridGroupButtons:filter(f)
+  local matched = {}
+  for _, b in pairs(self.buttons) do 
+    if f(b) then table.insert(matched, b) end
+  end
+  return matched
+end
+
+function GridGroupButtons:get_on()
+  return self:filter(function (b) return b.on == 1 end)
+end
+
+function GridGroupButtons:get_pressed()
+  return self:filter(function (b) return b.pressed == 1 end)
+end
+
+function GridGroupButtons:get_pressed_count()
+  local count = 0
+  for _, b in pairs(self:get_pressed()) do count = count + 1 end
+  return count
+end
+
+function GridGroupButtons:get_pressed_min_max()
+  local min = 100000
+  local max = 0
+  for _, b in pairs(self:get_pressed()) do
+    if b.pressed then
+      local index = self:control_local_vars(b).index
+      if index < min then
+        min = index
+      end
+      if index > max then
+        max = index
+      end
+    end
+  end
+  if min == 100000 then
+    min = 0
+  end
+  return {
+    min=min,
+    max=max
+  }
+end
 
 function GridGroupButtons:get() end
 
